@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Psy\Util\Str;
 
 class Question extends Model
 {
-    protected $fillable = ['title', 'slug', 'body', 'views', 'answers', 'votes', 'best_answer_id', 'user_id'];
+    protected $fillable = ['title', 'body'];
+//    protected $fillable = ['title', 'slug', 'body', 'views', 'answers', 'votes', 'best_answer_id', 'user_id'];
     public function user(){
         return $this->belongsTo(User::class);
     }
@@ -14,6 +16,6 @@ class Question extends Model
     protected function setTitleAttribute($value)
     {
         $this->attributes['title'] = $value;
-        $this->attributes['slug'] = Str::slug($value);
+        $this->attributes['slug'] = \Illuminate\Support\Str::slug($value);
     }
 }
