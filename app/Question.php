@@ -4,7 +4,6 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Psy\Util\Str;
-use Parsedown;
 class Question extends Model
 {
     protected $fillable = ['title', 'body', 'votes', 'views', 'answers', 'slug'];
