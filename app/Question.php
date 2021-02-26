@@ -4,10 +4,10 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use Psy\Util\Str;
-
+use Parsedown;
 class Question extends Model
 {
-    protected $fillable = ['title', 'body', 'votes', 'views', 'answers',];
+    protected $fillable = ['title', 'body', 'votes', 'views', 'answers', 'slug'];
 //    protected $fillable = ['title', 'slug', 'body', 'views', 'answers', 'votes', 'best_answer_id', 'user_id'];
     public function user(){
         return $this->belongsTo(User::class);
@@ -20,7 +20,7 @@ class Question extends Model
     }
 
     public function getUrlAttribute(){
-        return route('questions.show', $this->id);
+        return route("questions.show", $this->slug);
     }
 
     public function getCreatedDateAttribute(){
@@ -35,6 +35,13 @@ class Question extends Model
             return "answered";
         }
         return "unanswered";
-
+    }
+    private function bodyHtml()
+    {
+        return \Parsedown::instance()->text($this->body);
+    }
+    public function getBodyHtmlAttribute()
+    {
+        return \Parsedown::instance()->text($this->body);
     }
 }
